@@ -1,16 +1,5 @@
-import { useState } from 'react'
-import './App.css'
-import AuthForm from './components/AuthForm'
+import Layout from './components/Layout'
 
-function App() {
-
-
-  return (
-    <>
-    <div>    <AuthForm /></div>
-
-    </>
-  )
+export default function App() {
+  return <Layout />
 }
-
-export default App
