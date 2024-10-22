@@ -161,7 +161,7 @@ export default function AuthComponent() {
               />
             </>
           )}
-          <button type='submit'>Submit</button>
+          <button type='submit' className='submit'>Submit</button>
           <div className='w-full group authBtn border-2 border-medium-green rounded-lg mt-4 font-bold'>
             <button
               type='button'
