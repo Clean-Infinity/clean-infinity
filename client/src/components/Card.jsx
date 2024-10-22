@@ -1,6 +1,5 @@
 export default function Card() {
   return (
-<<<<<<< HEAD
     <div className='flex flex-col max-w-sm mx-auto border border-gray-300 rounded-lg overflow-hidden shadow-lg backdrop-blur-lg bg-white/30'>
       <img
         src='https://placehold.co/300x150/'
@@ -19,23 +18,4 @@ export default function Card() {
       </div>
     </div>
   );
-=======
-    <div className='flex border rounded shadow'>
-      <div className='w-3/10'>
-        <img
-          src='https://placehold.co/150/'
-          alt='Card Image'
-          className='h-full object-cover'
-        />
-      </div>
-      <div className='w-7/10 p-4'>
-        <h3 className='text-xl font-bold'>Card Title</h3>
-        <p className='text-sm text-gray-600'>
-          This is a description of the card. It can be about anything you want
-          to display in this section.
-        </p>
-      </div>
-    </div>
-  )
->>>>>>> 16c6997d6c173b97abcd59e6d3cf6d554d892d93
 }
