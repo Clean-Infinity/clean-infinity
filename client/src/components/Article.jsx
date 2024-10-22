@@ -4,7 +4,7 @@ export default function Article() {
       <div className='flex flex-row max-w-sm mx-auto border border-gray-300 rounded-lg overflow-hidden shadow-lg backdrop-blur-lg bg-white/30'>
         <img
           src='https://placehold.co/300x430/'
-          alt='Card Image'
+          alt='Card Image 1'
           className='w-40 h-full object-cover' // Adjusted width for horizontal layout
         />
         <div className='p-4 backdrop-blur-lg bg-white/20 w-full flex flex-col justify-between'>
