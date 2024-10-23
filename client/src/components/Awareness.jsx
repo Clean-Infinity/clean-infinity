@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import { useState } from 'react'
 import Card from './Card'
 import Article from './Article';
 
+=======
+import { useState } from 'react';
+import Card from './Card';
+import Article from './Article';
+>>>>>>> 15f49a48c899562625b114ea7d1cae89d150fa81
 function Accordion({ title, content }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,7 +28,11 @@ function Accordion({ title, content }) {
         </div>
       )}
     </div>
+<<<<<<< HEAD
   )
+=======
+  );
+>>>>>>> 15f49a48c899562625b114ea7d1cae89d150fa81
 }
 
 export default function Awareness() {
