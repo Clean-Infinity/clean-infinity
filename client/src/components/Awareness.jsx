@@ -97,7 +97,7 @@ export default function Awareness() {
       <div className='w-full max-w-md mb-8'>
         <Accordion
           title='What is this app about?'
-          content='This app helps you with XYZ.'
+          content='This app helps you with Domestic Waste Management and Proper Disposal.'
         />
         <Accordion
           title='How do I reset my password?'
