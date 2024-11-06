@@ -1,26 +1,6 @@
-import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import {useState, useEffect} from 'react'
 
-const statesData = {
-  states: [
-    {
-      state: 'Tamil Nadu',
-      districts: [
-        'Ariyalur', 'Chengalpattu', 'Chennai', 'Coimbatore', 
-        'Cuddalore', 'Dharmapuri', 'Dindigul', 'Erode', 
-        'Kancheepuram', 'Kanyakumari', 'Karur', 'Krishnagiri', 
-        'Madurai', 'Nagapattinam', 'Namakkal', 'Nilgiris', 
-        'Perambalur', 'Pudukkottai', 'Ramanathapuram', 'Ranipet', 
-        'Salem', 'Sivaganga', 'Tenkasi', 'Thanjavur', 
-        'Theni', 'Tiruchirappalli', 'Tirunelveli', 'Tiruppur', 
-        'Vellore', 'Viluppuram', 'Virudhunagar'
-      ]
-    },
-    // Add more states here if needed
-  ]
-};
-
-const ProfileForm = () => {
+export default function ProfileForm() {
   const [profile, setProfile] = useState({
     id: '',
     name: '',
@@ -30,270 +10,86 @@ const ProfileForm = () => {
     state: '',
     district: '',
     ward: '',
-    mappedTvmobileNumber: '',
+    mappedTvmobileNumber: ['12345', '12345', '12345'],
     nfcDid: '',
     credits: '',
     nfcDPoints: '',
     photo: null
-  });
-
-  const [districtsArr, setDistricts] = useState([]);
-  const [editing, setEditing] = useState(false);
-  const [errors, setErrors] = useState({});
+  })
 
   useEffect(() => {
-    // Generate random id and credits when the component loads
-    setProfile((prevProfile) => ({
+    setProfile(prevProfile => ({
       ...prevProfile,
-      id: Math.floor(Math.random() * 1000000),  // Random ID
-      credits: Math.floor(Math.random() * 5000),  // Random credits
-    }));
-  }, []);
-
-  useEffect(() => {
-    // Automatically set districts when state is selected
-    if (profile.state) {
-      const selectedState = statesData.states.find(
-        (stateObj) => stateObj.state === profile.state
-      );
-      if (selectedState) {
-        setDistricts(selectedState.districts);
-      } else {
-        setDistricts([]);
-      }
-    }
-  }, [profile.state]);
-
-  const handleChange = (e) => {
-    setProfile({
-      ...profile,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleFileChange = (e) => {
-    setProfile({
-      ...profile,
-      photo: URL.createObjectURL(e.target.files[0]),
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add validation logic
-    const newErrors = {};
-    if (!profile.name) newErrors.name = 'Name is required';
-    if (!profile.mobileNumber) newErrors.mobileNumber = 'Mobile number is required';
-    if (!profile.mailId) newErrors.mailId = 'Mail ID is required';
-    if (!profile.state) newErrors.state = 'State is required';
-    if (!profile.district) newErrors.district = 'District is required';
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      // Perform the submit action (e.g., send data to server)
-      console.log('Profile submitted', profile);
-      toast.success('Profile saved successfully!');
-      setEditing(false);
-    }
-  };
+      id: Math.floor(Math.random() * 1000),
+      credits: Math.floor(Math.random() * 1000)
+    }))
+  }, [])
 
   return (
-    <div className="bg-white py-8 px-4 w-full max-w-4xl mx-auto shadow-md rounded-lg">
-      <h2 className="text-3xl font-semibold text-green-700 mb-6 text-center">Profile</h2>
-      <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleSubmit}>
-        <div className="col-span-full md:col-span-1 flex justify-center">
-          <label htmlFor="photo-upload" className="cursor-pointer">
-            {profile.photo ? (
-              <img src={profile.photo} alt="Profile" className="w-32 h-32 rounded-full object-cover shadow-md" />
-            ) : (
-              <div className="w-32 h-32 flex items-center justify-center bg-green-100 rounded-full shadow-md">
-                <span className="text-green-700">Upload Photo</span>
-              </div>
-            )}
-            <input
-              id="photo-upload"
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleFileChange}
+    <div className='flex items-center justify-center container min-h-screen'>
+      <div className='drop p-4 lg:w-7/12 md:w-1/2'>
+        <h2 className='font-semibold text-xl mb-2 text-start'>Profile</h2>
+        <form className='grid grid-cols-1 md:grid-cols-2 gap-2 items-center'>
+          <div className='col-span-2 md:col-span-1 flex justify-center'>
+            <img
+              src={profile.photo || 'https://placehold.co/150'}
+              alt='Profile'
+              className='w-1/2 md:w-10/12 lg:w-10/12 rounded-lg shadow-lg'
             />
-          </label>
-        </div>
-
-        <div className="col-span-full md:col-span-1">
-          <button
-            type="button"
-            className="w-full bg-green-700 text-white py-2 rounded cursor-default"
-            disabled
-          >
-             ID: {profile.id}          </button>
-        </div>
-
-        <div className="col-span-full md:col-span-1">
-          <input
-            type="text"
-            name="name"
-            value={profile.name}
-            onChange={handleChange}
-            placeholder="Name"
-            className="w-full px-4 py-2 border rounded"
-            disabled={!editing}
-          />
-          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
-        </div>
-
-        <div className="col-span-full md:col-span-1">
-          <input
-            type="text"
-            name="mobileNumber"
-            value={profile.mobileNumber}
-            onChange={handleChange}
-            placeholder="Mobile Number"
-            className="w-full px-4 py-2 border rounded"
-            disabled={!editing}
-          />
-          {errors.mobileNumber && <p className="text-red-500 text-sm">{errors.mobileNumber}</p>}
-        </div>
-
-        <div className="col-span-full md:col-span-1">
-          <input
-            type="email"
-            name="mailId"
-            value={profile.mailId}
-            onChange={handleChange}
-            placeholder="Mail ID"
-            className="w-full px-4 py-2 border rounded"
-            disabled={!editing}
-          />
-          {errors.mailId && <p className="text-red-500 text-sm">{errors.mailId}</p>}
-        </div>
-
-        <div className="col-span-full md:col-span-1">
-          <input
-            type="text"
-            name="address"
-            value={profile.address}
-            onChange={handleChange}
-            placeholder="Address"
-            className="w-full px-4 py-2 border rounded"
-            disabled={!editing}
-          />
-        </div>
-
-        <div className="col-span-full md:col-span-1">
-          <select
-            name="state"
-            value={profile.state}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border rounded"
-            disabled={!editing}
-          >
-            <option value='' disabled>Select State</option>
-            {statesData.states.map((stateObj, index) => (
-              <option key={index} value={stateObj.state}>
-                {stateObj.state}
-              </option>
-            ))}
-          </select>
-          {errors.state && <p className="text-red-500 text-sm">{errors.state}</p>}
-        </div>
-
-        <div className="col-span-full md:col-span-1">
-          <select
-            name="district"
-            value={profile.district}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border rounded"
-            disabled={!editing}
-          >
-            <option value='' disabled>Select District</option>
-            {districtsArr.map((district, index) => (
-              <option key={index} value={district}>
-                {district}
-              </option>
-            ))}
-          </select>
-          {errors.district && <p className="text-red-500 text-sm">{errors.district}</p>}
-        </div>
-
-        <div className="col-span-full md:col-span-1">
-          <input
-            type="text"
-            name="ward"
-            value={profile.ward}
-            onChange={handleChange}
-            placeholder="Ward"
-            className="w-full px-4 py-2 border rounded"
-            disabled={!editing}
-          />
-        </div>
-
-        <div className="col-span-full md:col-span-1">
-          <input
-            type="text"
-            name="mappedTvmobileNumber"
-            value={profile.mappedTvmobileNumber}
-            onChange={handleChange}
-            placeholder="Mapped Mobile Number"
-            className="w-full px-4 py-2 border rounded"
-            disabled={!editing}
-          />
-        </div>
-
-        <div className="col-span-full md:col-span-1">
-          <input
-            type="text"
-            name="nfcDid"
-            value={profile.nfcDid}
-            onChange={handleChange}
-            placeholder="NFC ID"
-            className="w-full px-4 py-2 border rounded"
-            disabled={!editing}
-          />
-        </div>
-
-        <div className="col-span-full md:col-span-1">
-          <button
-            type="button"
-            className="w-full bg-green-700 text-white py-2 rounded cursor-default"
-            disabled
-          >
-            🏅 Credits: {profile.credits}
-          </button>
-        </div>
-
-        <div className="col-span-full md:col-span-1">
-          <input
-            type="text"
-            name="nfcDPoints"
-            value={profile.nfcDPoints}
-            onChange={handleChange}
-            placeholder="NFC Points"
-            className="w-full px-4 py-2 border rounded"
-            disabled={!editing}
-          />
-        </div>
-
-        <div className="col-span-full">
-          <button
-            type="button"
-            onClick={() => setEditing(!editing)}
-            className={`w-full py-2 rounded ${editing ? 'bg-red-600' : 'bg-green-700'} text-white`}
-          >
-            {editing ? 'Cancel' : 'Edit Profile'}
-          </button>
-        </div>
-
-        {editing && (
-          <div className="col-span-full">
-            <button type="submit" className="w-full bg-green-700 text-white py-2 rounded">
-              Save Changes
-            </button>
           </div>
-        )}
-      </form>
-    </div>
-  );
-};
+          <input id='photo-upload' type='file' accept='image/*' className='hidden' />
+          <span className='col-span-2 md:col-span-1'>
+            <input type='text' name='name' value={profile.name} placeholder='Name' disabled />
+            <input type='text' name='mobileNumber' value={profile.mobileNumber} placeholder='Mobile Number' disabled />
+            <input type='email' name='mailId' value={profile.mailId} placeholder='Mail ID' disabled />
+          </span>
+          <input
+            type='text'
+            name='address'
+            value={profile.address}
+            placeholder='Address'
+            disabled
+            className='col-span-2'
+          />
+          <span className='flex gap-2 col-span-2'>
+            <input type='text' name='state' value={profile.state} placeholder='State' disabled />
+            <input type='text' name='district' value={profile.district} placeholder='District' disabled />
+          </span>
+          <input type='text' name='ward' value={profile.ward} placeholder='Ward' disabled className='col-span-2' />
+          <input
+            type='text'
+            name='nfcDid'
+            value={profile.nfcDid}
+            placeholder='NFC ID'
+            disabled
+            className='col-span-2'
+          />
 
-export default ProfileForm;
+          <div className='flex flex-col md:flex-row gap-2 md:gap-4 col-span-2'>
+            <input
+              type='text'
+              name='nfcDPoints'
+              value={profile.nfcDPoints}
+              placeholder='NFC Points'
+              disabled
+              className='flex-1 col-span-2'
+            />
+            <div type='button' className='btn text-center flex-1' disabled>
+              🏅 Credits: {profile.credits}
+            </div>
+          </div>
+          <div className='col-span-2 text-center'>
+            <p className='mb-2'>Mapped TV Mobile Number</p>
+            <div className='flex gap-2 justify-center'>
+              {profile.mappedTvmobileNumber.map(number => (
+                <span key={number} className='drop px-2 py-1 text-sm'>
+                  {number}
+                </span>
+              ))}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
